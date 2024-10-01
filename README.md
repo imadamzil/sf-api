@@ -1,58 +1,66 @@
-# LeBonCode
-Le but de ce test est de réaliser une api pour un site de création de projets immobiliers.  
-Vous commencez le projet avec un symfony skeleton, vous disposez aussi d'un docker-compose.
+# Projet API création de projets immobiliers.
 
-Ce test à pour but de voir votre logique de code. Il n'y a pas de mauvaise réponse, faites le comme si vous codiez naturellement.  
-Merci de ne pas utiliser de librairies externes telles que api-platform.  
-Vous avez quatre heures pour effectuer ce test, bien entendu nous ne pourrons pas vérifier si vous y passez 42h ou 30mn, mais ça vous donne une indication. 
-Ne restez pas bloqué trop longtemps sur un sujet, n'hésitez pas à faire ce qui vous semble le plus simple en premier. 
+Ce projet est un test technique pour créer un api sans utiliser le API PLATFORM
 
-Avant de commencer, faites un fork du projet. C'est ce fork qui servira de rendu pour ce test.
+## Installation
 
-## Projects
+1. Clonez le dépôt :
 
-#### Create advert `POST`
-Un utilisateur pourra ajouter un projet immobilier (`/project`) avec ces informations :
-- Titre du projet
-- Description du projet
-- Nombre de lots
-- Code postal
-- Date de livraison
-- Photo
-#### Delete project  `DELETE`
-Un utilisateur pourra supprimer un projet (`/project/{id}`).
-la suppression rend le projet inactif
-#### Update project `PATCH`
-Un utilisateur pourra modifier les informations d'une annonce (`/project/{id}`).
-Le titre du projet ne peut pas être modifié.
-#### List project `GET`
-Un utilisateur pourra récupérer la liste des projets (`/project`).
-#### Project by id `GET`
-Un utilisateur pourra récupérer les informations d'un projet (`/project/{id}`) avec son `id` associé.
-#### Search project `GET`
-Un utilisateur pourra chercher un projet (`/project/search`).
-- title
-- Date de livraison min
-- Date de livraison max
+```bash
+git clone https://github.com/imadamzil/sf-api.git
+cd sf-api
 
-## User
+```
+2. Démarrez les services Docker :
+    ```bash
+    docker-compose up -d
+    ```
+3. Accédez au conteneur PHP :
+   ```bash
+   docker exec -it sf-api-php bash
+   ```
 
-#### Register `POST`
-Un utilisateur pourra s'enregistrer (`/register`) avec au minimum :
-- Nom
-- Prénom
-- Numéro de téléphone
-- Email
-- Mot de passe
-lors de la création, l'utilisateur appartient au groupe `USER`
+4. Installez les dépendances et exécutez le serveur :
+    ```bash
+    composer install
+    php -S 0.0.0.0:8000 -t public
+    ```
+5. Configurez les variables d’environnement.
 
-#### Login `POST`
-Par défaut, l'utilisateur appartiendra au groupe `USER`.
-Un utilisateur pourra se connecter (`/login`) avec ses identifiants :
-- Email
-- Password
+     ```bash
+      DATABASE_URL="mysql://root:password@mysql:3306/leboncode?serverVersion=8.0&charset=utf8mb4"
+    ```
 
-[Installation de JWT](https://github.com/lexik/LexikJWTAuthenticationBundle/blob/3.x/Resources/doc/index.rst#installation)
+6. Créez la base de données et exécutez les migrations :
+    ```bash
+    php bin/console doctrine:database:create
+    php bin/console doctrine:migrations:migrate
+    ```
+## Endpoints
+### Testing
+vous pouvez utilisé par exemple POSTMAN
 
-#### Sécurisation des routes
-Les routes ne sont accessibles qu'à des utilisateurs connectés
+### Authentification
+
+- **Inscription** : `POST /register`
+- **Login** : `POST /login`
+
+### Projets
+
+- **Créer un projet** : `POST /project`
+- **Supprimer un projet** : `DELETE /project/{id}`
+- **Mettre à jour un projet** : `PATCH /project/{id}`
+- **Lister les projets** : `GET /project`
+- **Obtenir un projet par ID** : `GET /project/{id}`
+- **Rechercher des projets** : `GET /project/search`
+
+## Sécurisation
+
+Toutes les routes sauf `/register` et `/login` nécessitent un JWT valide dans l’en-tête `Authorization`.
+
+## Technologies Utilisées
+
+- Symfony 6.4
+- MySQL 8.0
+- Docker
+- LexikJWTAuthenticationBundle
