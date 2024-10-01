@@ -34,8 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $lastNamer = null;
 
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
@@ -130,17 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLastNamer(): ?string
-    {
-        return $this->lastNamer;
-    }
 
-    public function setLastNamer(string $lastNamer): static
-    {
-        $this->lastNamer = $lastNamer;
-
-        return $this;
-    }
 
     public function getLastName(): ?string
     {
