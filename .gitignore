@@ -1,0 +1,12 @@
+
+var/log/*
+
+var/cache/*
+
+symfony.lock
+
+vendor/
+.idea/
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
