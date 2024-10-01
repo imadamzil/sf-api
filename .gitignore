@@ -1,0 +1,9 @@
+
+var/log/*
+
+var/cache/*
+
+symfony.lock
+
+vendor/
+.idea/

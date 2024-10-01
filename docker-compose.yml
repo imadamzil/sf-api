@@ -10,5 +10,14 @@ services:
       MYSQL_DATABASE: leboncode
     volumes:
       - admin-leboncode:/var/lib/mysql
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sf-api-php
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"
 volumes:
   admin-leboncode:
