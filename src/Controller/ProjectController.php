@@ -30,11 +30,11 @@ class ProjectController extends AbstractController
         $project->setDeliveryDate(new \DateTime($data['deliveryDate']));
         $project->setPhoto($data['photo']);
         $project->setActive(true); // Assume that a new project is active
-
+        $project->setUser($this->getUser());
         $this->entityManager->persist($project);
         $this->entityManager->flush();
 
-        return new JsonResponse(['message' => 'Project created successfully', 'project' => $project], Response::HTTP_CREATED);
+        return new JsonResponse(['message' => 'Project created successfully', 'project' => $project->__toArray()], Response::HTTP_CREATED);
 
     }
 
@@ -81,7 +81,6 @@ class ProjectController extends AbstractController
         }
 
         $this->entityManager->flush();
-
         return new JsonResponse(['message' => 'Project updated successfully']);
     }
 

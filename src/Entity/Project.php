@@ -138,4 +138,20 @@ class Project
 
         return $this;
     }
+
+    public function __toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'numberOfLots' => $this->numberOfLots,
+            'postalCode' => $this->postalCode,
+            'deliveryDate' => $this->deliveryDate,
+            'photo' => $this->photo,
+            'isActive' => $this->isActive,
+
+        ];
+    }
+
 }

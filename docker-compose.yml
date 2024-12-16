@@ -9,7 +9,18 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: leboncode
     volumes:
-      - admin-leboncode:/var/lib/mysql
+      - sf7:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
+
+    ports:
+      - 8080:80
   php:
     build:
       context: .
@@ -20,4 +31,4 @@ services:
     ports:
       - "8000:8000"
 volumes:
-  admin-leboncode:
+  sf7:
